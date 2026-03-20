@@ -7,7 +7,19 @@ from src.models.task import Task
 -------------------------
 """
 
-
+def help() -> None:
+    print("get_id - вывести ID задачи")
+    print("set_id - изменить ID задачи")
+    print("get_description - вывести описание задачи")
+    print("set_description - изменить описание задачи")
+    print("get_priority - вывести приоритет задачи")
+    print("set_priority - изменить приоритет задачи")
+    print("get_status - вывести статус задачи")
+    print("set_status - изменить статус задачи")
+    print("get_create_time - вывести время создания задачи")
+    print("set_create_time - изменить время создания задачи")
+    print("get_is_ready - вывести готовность задачи")
+    print("help - сводка по командам")
 
 def main() -> None:
     """
@@ -16,6 +28,7 @@ def main() -> None:
     """
 
     task = Task("23mkg5", "Тестовая задача", 3, "fixing", datetime(1, 1, 1, 1, 1, 1))
+    print("Для сводки по командам введите \"help\"")
     while ((cin := input("Введите команду: ")) != "exit"):
         try:
             match cin:
@@ -59,6 +72,9 @@ def main() -> None:
 
                 case "get_is_ready":
                     print(task.is_ready)
+
+                case "help":
+                    help()
 
                 case _:
                     print("Некорректный ввод")

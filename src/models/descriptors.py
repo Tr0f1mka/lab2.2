@@ -15,23 +15,23 @@ class IdDescriptor:
     Дескриптор ID задачи: запрещает изменения
     """
 
-    def __set_name__(self, cls: "type[Task]", name: str):
+    def __set_name__(self, cls: "type[Task]", name: str) -> None:
         """
         Создаёт имя атрибута
         """
         self.name = name
         self.private_name = f"_{name}"
 
-    def __get__(self, instance: "Task", cls: "type[Task]"):
+    def __get__(self, instance: "Task", cls: "type[Task]") -> str:
         """
         Геттер для ID
         """
         logger.info("GET ID")
         if instance is None:
             return self
-        return getattr(instance, self.private_name, None)
+        return getattr(instance, self.private_name)
 
-    def __set__(self, instance: "Task", value: str):
+    def __set__(self, instance: "Task", value: str) -> None:
         """
         Сеттер для ID
         """
@@ -48,7 +48,7 @@ class IdDescriptor:
         setattr(instance, self.private_name, value)
         logger.info("SUCCES")
 
-    def __delete__(self, instance: "Task"):
+    def __delete__(self, instance: "Task") -> None:
         """
         Делитер для ID
         """
@@ -61,23 +61,23 @@ class DescriptionDescriptor:
     Дескриптор описания задачи: запрещает изменения
     """
 
-    def __set_name__(self, cls: "type[Task]", name: str):
+    def __set_name__(self, cls: "type[Task]", name: str) -> None:
         """
         Создаёт имя атрибута
         """
         self.name = name
         self.private_name = f"_{name}"
 
-    def __get__(self, instance: "Task", cls: "type[Task]"):
+    def __get__(self, instance: "Task", cls: "type[Task]") -> str:
         """
         Геттер для description
         """
         logger.info("GET DESCRIPTION")
         if instance is None:
             return self
-        return getattr(instance, self.private_name, None)
+        return getattr(instance, self.private_name)
 
-    def __set__(self, instance: "Task", value: str):
+    def __set__(self, instance: "Task", value: str) -> None:
         """
         Сеттер для description
         """
@@ -94,7 +94,7 @@ class DescriptionDescriptor:
         setattr(instance, self.private_name, value)
         logger.info("SUCCES")
 
-    def __delete__(self, instance: "Task"):
+    def __delete__(self, instance: "Task") -> None:
         """
         Делитер для description
         """
@@ -107,23 +107,23 @@ class PriorityDescriptor:
     Дескриптор приоритета: можно смотреть и менять
     """
 
-    def __set_name__(self, cls: "type[Task]", name: str):
+    def __set_name__(self, cls: "type[Task]", name: str) -> None:
         """
         Создаёт имя атрибута
         """
         self.name = name
         self.private_name = f"_{name}"
 
-    def __get__(self, instance: "Task", cls: "type[Task]"):
+    def __get__(self, instance: "Task", cls: "type[Task]") -> int:
         """
         Геттер для priority
         """
         logger.info("GET priority")
         if instance is None:
             return self
-        return getattr(instance, self.private_name, None)
+        return getattr(instance, self.private_name)
 
-    def __set__(self, instance: "Task", value: int):
+    def __set__(self, instance: "Task", value: int) -> None:
         """
         Сеттер для priority
         """
@@ -140,7 +140,7 @@ class PriorityDescriptor:
         setattr(instance, self.private_name, value)
         logger.info("SUCCES")
 
-    def __delete__(self, instance: "Task"):
+    def __delete__(self, instance: "Task") -> None:
         """
         Делитер для priority
         """
@@ -153,23 +153,23 @@ class StatusDescriptor:
     Дескриптор статуса: можно смотреть и менять
     """
 
-    def __set_name__(self, cls: "type[Task]", name: str):
+    def __set_name__(self, cls: "type[Task]", name: str) -> None:
         """
         Создаёт имя атрибута
         """
         self.name = name
         self.private_name = f"_{name}"
 
-    def __get__(self, instance: "Task", cls: "type[Task]"):
+    def __get__(self, instance: "Task", cls: "type[Task]") -> str:
         """
         Геттер для status
         """
         logger.info("GET status")
         if instance is None:
             return self
-        return getattr(instance, self.private_name, None)
+        return getattr(instance, self.private_name)
 
-    def __set__(self, instance: "Task", value: str):
+    def __set__(self, instance: "Task", value: str) -> None:
         """
         Сеттер для status
         """
@@ -183,7 +183,7 @@ class StatusDescriptor:
         setattr(instance, self.private_name, value)
         logger.info("SUCCES")
 
-    def __delete__(self, instance: "Task"):
+    def __delete__(self, instance: "Task") -> None:
         """
         Делитер для status
         """
@@ -196,7 +196,7 @@ class IsReadyDescriptor:
     Non-data дескриптор вычисления готовности задачи
     """
 
-    def __get__(self, instance: "Task", cls: "type[Task]"):
+    def __get__(self, instance: "Task", cls: "type[Task]") -> bool:
         """
         Геттер для is_ready
         """

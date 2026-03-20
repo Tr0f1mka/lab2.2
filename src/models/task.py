@@ -22,14 +22,14 @@ class Task:
     is_ready = IsReadyDescriptor()
 
     @property
-    def create_time(self):
+    def create_time(self) -> datetime:
         """
         Геттер для create_time
         """
         return self._date
 
     @create_time.setter
-    def create_time(self, value):
+    def create_time(self, value) -> None:
         """
         Сеттер для create_time
         """
@@ -39,7 +39,7 @@ class Task:
             raise CreateTimeException("Incorrect type")
         self._date = value
 
-    def __init__(self, id: str, description: str, priority: int, status: str, create_time: datetime):
+    def __init__(self, id: str, description: str, priority: int, status: str, create_time: datetime) -> None:
         self.id = id
         self.description = description
         self.priority = priority
