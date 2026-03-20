@@ -15,6 +15,13 @@ class IdDescriptor:
     Дескриптор ID задачи: запрещает изменения
     """
 
+    def __set_name__(self, cls: "type[Task]", name: str):
+        """
+        Создаёт имя атрибута
+        """
+        self.name = name
+        self.private_name = f"_{name}"
+
     def __get__(self, instance: "Task", cls: "type[Task]"):
         """
         Геттер для ID
@@ -22,8 +29,8 @@ class IdDescriptor:
         logger.info("GET ID")
         if instance is None:
             return self
-        return self.id
-    
+        return getattr(instance, self.private_name, None)
+
     def __set__(self, instance: "Task", value: str):
         """
         Сеттер для ID
@@ -32,27 +39,34 @@ class IdDescriptor:
         if instance is None:
             logger.error("Not defined task")
             raise IdException("ID есть только в существуюшей задаче")
-        if hasattr(instance, "id"):
-            logger.error("Not defined ID-field")
+        if hasattr(instance, self.private_name):
+            logger.error("ID already set")
             raise IdException("Нельзя менять ID задачи")
-        if not isinstance(value, str):
-            logger.error("Incorrect type value")
-            raise IdException("ID задачи должно быть строкой")
-        self.id = value
+        if not isinstance(value, str) or value.strip() == "":
+            logger.error("Incorrect value")
+            raise IdException("Некорректный ID задачи")
+        setattr(instance, self.private_name, value)
         logger.info("SUCCES")
-    
+
     def __delete__(self, instance: "Task"):
         """
         Делитер для ID
         """
         logger.error("DEL ID")
-        raise IdException("Нельзя удалять ID задачи")   
+        raise IdException("Нельзя удалять ID задачи")
 
 
 class DescriptionDescriptor:
     """
     Дескриптор описания задачи: запрещает изменения
     """
+
+    def __set_name__(self, cls: "type[Task]", name: str):
+        """
+        Создаёт имя атрибута
+        """
+        self.name = name
+        self.private_name = f"_{name}"
 
     def __get__(self, instance: "Task", cls: "type[Task]"):
         """
@@ -61,8 +75,8 @@ class DescriptionDescriptor:
         logger.info("GET DESCRIPTION")
         if instance is None:
             return self
-        return self.description
-    
+        return getattr(instance, self.private_name, None)
+
     def __set__(self, instance: "Task", value: str):
         """
         Сеттер для description
@@ -70,14 +84,14 @@ class DescriptionDescriptor:
         logger.info(f"SET desription: TASK: VALUE: [{value}]")
         if instance is None:
             logger.error("Not defined task")
-            raise DescriptionException("description есть только в существуюшей задаче")
-        if hasattr(instance, "description"):
-            logger.error("Not defined description-field")
-            raise DescriptionException("Нельзя менять DESCRIPTION задачи")
-        if not isinstance(value, str):
-            logger.error("Incorrect type value")
-            raise DescriptionException("description задачи должно быть строкой")
-        self.description = value
+            raise DescriptionException("Description есть только в существуюшей задаче")
+        if hasattr(instance, self.private_name):
+            logger.error("Description already set")
+            raise DescriptionException("Нельзя менять описание задачи")
+        if not isinstance(value, str) or value.strip() == "":
+            logger.error("Incorrect value")
+            raise DescriptionException("Некорректное описание задачи")
+        setattr(instance, self.private_name, value)
         logger.info("SUCCES")
 
     def __delete__(self, instance: "Task"):
@@ -85,16 +99,20 @@ class DescriptionDescriptor:
         Делитер для description
         """
         logger.error("DEL description")
-        if instance is None:
-            raise DescriptionException("Описание есть только в существующей задаче")
-        if hasattr(instance, "description"):
-            raise DescriptionException("Нельзя удалять описание задачи")
+        raise DescriptionException("Нельзя удалять описание задачи")
 
 
 class PriorityDescriptor:
     """
     Дескриптор приоритета: можно смотреть и менять
     """
+
+    def __set_name__(self, cls: "type[Task]", name: str):
+        """
+        Создаёт имя атрибута
+        """
+        self.name = name
+        self.private_name = f"_{name}"
 
     def __get__(self, instance: "Task", cls: "type[Task]"):
         """
@@ -103,8 +121,8 @@ class PriorityDescriptor:
         logger.info("GET priority")
         if instance is None:
             return self
-        return self.priority
-    
+        return getattr(instance, self.private_name, None)
+
     def __set__(self, instance: "Task", value: int):
         """
         Сеттер для priority
@@ -112,31 +130,35 @@ class PriorityDescriptor:
         logger.info(f"SET priority: TASK: VALUE: [{value}]")
         if instance is None:
             logger.error("Not defined task")
-            raise PriorityException("priority есть только в существуюшей задаче")
+            raise PriorityException("Priority есть только в существуюшей задаче")
         if not isinstance(value, int):
             logger.error("Incorrect type value")
-            raise PriorityException("priority задачи должно быть строкой")
+            raise PriorityException("Priority задачи должно быть числом")
         if value not in PRIORITIES:
             logger.error("Incorrect value")
-            raise PriorityException("priority должно быть от 0 до 4")
-        self.priority = value
+            raise PriorityException("Priority должно быть от 0 до 4")
+        setattr(instance, self.private_name, value)
         logger.info("SUCCES")
-    
+
     def __delete__(self, instance: "Task"):
         """
         Делитер для priority
         """
         logger.error("DEL priority")
-        if instance is None:
-            raise PriorityException("Приоритет есть только в существующей задаче")
-        if hasattr(instance, "priority"):
-            raise PriorityException("Нельзя удалять приоритет задачи")
+        raise PriorityException("Нельзя удалять приоритет задачи")
 
 
 class StatusDescriptor:
     """
     Дескриптор статуса: можно смотреть и менять
     """
+
+    def __set_name__(self, cls: "type[Task]", name: str):
+        """
+        Создаёт имя атрибута
+        """
+        self.name = name
+        self.private_name = f"_{name}"
 
     def __get__(self, instance: "Task", cls: "type[Task]"):
         """
@@ -145,8 +167,8 @@ class StatusDescriptor:
         logger.info("GET status")
         if instance is None:
             return self
-        return self.status
-    
+        return getattr(instance, self.private_name, None)
+
     def __set__(self, instance: "Task", value: str):
         """
         Сеттер для status
@@ -154,22 +176,19 @@ class StatusDescriptor:
         logger.info(f"SET status: TASK: VALUE: [{value}]")
         if instance is None:
             logger.error("Not defined task")
-            raise StatusException("status есть только в существуюшей задаче")
+            raise StatusException("Status есть только в существуюшей задаче")
         if not isinstance(value, str):
             logger.error("Incorrect type value")
-            raise StatusException("status задачи должно быть строкой")
-        self.status = value
+            raise StatusException("Status задачи должно быть строкой")
+        setattr(instance, self.private_name, value)
         logger.info("SUCCES")
-    
+
     def __delete__(self, instance: "Task"):
         """
         Делитер для status
         """
         logger.error("DEL status")
-        if instance is None:
-            raise StatusException("Статус есть только в существующей задаче")
-        if hasattr(instance, "status"):
-            raise StatusException("Нельзя удалять статус задачи")
+        raise StatusException("Нельзя удалять статус задачи")
 
 
 class IsReadyDescriptor:

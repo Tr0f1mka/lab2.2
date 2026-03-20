@@ -6,6 +6,7 @@ from src.models.descriptors import (IdDescriptor,
                                     PriorityDescriptor,
                                     StatusDescriptor,
                                     IsReadyDescriptor)
+from src.models.exceptions import CreateTimeException
 
 
 @dataclass
@@ -22,18 +23,20 @@ class Task:
 
     @property
     def create_time(self):
+        """
+        Геттер для create_time
+        """
         return self._date
-    
-    @create_time.getter
-    def create_time(self):
-        return self._date
-    
+
     @create_time.setter
     def create_time(self, value):
-        if hasattr(self, "create_time"):
-            raise Exception("Change date")
+        """
+        Сеттер для create_time
+        """
+        if hasattr(self, "_date"):
+            raise CreateTimeException("Change date")
         if not isinstance(value, datetime):
-            raise Exception("Incorrect type")
+            raise CreateTimeException("Incorrect type")
         self._date = value
 
     def __init__(self, id: str, description: str, priority: int, status: str, create_time: datetime):

@@ -7,4 +7,4 @@ class PRIORITIES(Enum):
     HIGH = 3
     EXTRA_HIGH = 4
 
-READY_VARIANTS = ["готово", "выполнено", "завершено", "complete", "ready"]
+READY_VARIANTS = ["готово", "выполнено", "завершено", "complete", "ready", "done"]
